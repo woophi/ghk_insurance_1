@@ -120,7 +120,8 @@ export const App = () => {
               <Swiper
                 initialSlide={selectedSlideIndex}
                 spaceBetween={8}
-                slidesPerView={1}
+                slidesPerView={1.2}
+                centeredSlides
                 onSlideChange={v => setSelectedSlideIndex(v.activeIndex)}
               >
                 {slides.map(s => (

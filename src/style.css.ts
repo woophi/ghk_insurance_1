@@ -31,8 +31,6 @@ const row = style({
 });
 
 const slide = style({
-  minWidth: '58px',
-  maxWidth: 'max-content',
   backgroundColor: '#F8F8F8',
   padding: '1.5rem 1rem',
   borderRadius: '1rem',
