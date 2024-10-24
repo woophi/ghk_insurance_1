@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { LS, LSKeys } from './ls';
 import { appSt } from './style.css';
 import { ThxLayout } from './thx/ThxLayout';
+import { sendDataToGA } from './utils/events';
 
 const slides = [
   {
@@ -70,19 +71,16 @@ export const App = () => {
   const [thxShow, setThx] = useState(LS.getItem(LSKeys.ShowThx, false));
 
   const submit = () => {
+    window.gtag('event', '3623_second_landing_v1');
     setLoading(true);
-
-    // LS.setItem(LSKeys.ShowThx, true);
-    setThx(true);
-    setLoading(false);
-    // sendDataToGA({
-    //   autopayments: Number(checked) as 1 | 0,
-    //   limit: Number(checked2) as 1 | 0,
-    //   limit_sum: limit ?? 0,
-    //   insurance: Number(checked3) as 1 | 0,
-    //   email: email ? 1 : 0,
-    // }).then(() => {
-    // });
+    sendDataToGA({
+      other_man: Number(anotherPersonCheck) as 1 | 0,
+      sum: selectedBtn === 'y' ? selectedSlideItem.perYear : selectedSlideItem.perMonth,
+    }).then(() => {
+      setThx(true);
+      setLoading(false);
+      LS.setItem(LSKeys.ShowThx, true);
+    });
   };
 
   const steps = useMemo(() => {
@@ -353,7 +351,15 @@ export const App = () => {
 
       <div className={appSt.bottomBtn}>
         {step === 1 ? (
-          <ButtonMobile block view="primary" className={appSt.btn} onClick={() => setStep(2)}>
+          <ButtonMobile
+            block
+            view="primary"
+            className={appSt.btn}
+            onClick={() => {
+              window.gtag('event', '3623_main_landing_v1');
+              setStep(2);
+            }}
+          >
             <div className={appSt.btnContainer}>
               <div>
                 <Typography.TitleResponsive font="system" tag="h2" view="xsmall" weight="bold">
