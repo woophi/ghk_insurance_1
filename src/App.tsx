@@ -2,7 +2,6 @@ import { ButtonMobile } from '@alfalab/core-components/button/mobile';
 import { CDNIcon } from '@alfalab/core-components/cdn-icon';
 import { Gap } from '@alfalab/core-components/gap';
 import { Grid } from '@alfalab/core-components/grid';
-import { InputMobile } from '@alfalab/core-components/input/mobile';
 import { Switch } from '@alfalab/core-components/switch';
 import { Typography } from '@alfalab/core-components/typography';
 import { useMemo, useState } from 'react';
@@ -63,21 +62,15 @@ const dateNM = `${now.getDate()}.${now.getMonth() + 2}.${now.getFullYear()}`;
 
 export const App = () => {
   const [anotherPersonCheck, setAnotherPersonCheck] = useState(false);
-  const [selectedSlideIndex, setSelectedSlideIndex] = useState(0);
-  const [email, setEmail] = useState('');
+  const [selectedSlideIndex, setSelectedSlideIndex] = useState(3);
   const [step, setStep] = useState(1);
   const [selectedBtn, setSelectedBtn] = useState<'y' | 'm'>('y');
   const selectedSlideItem = slides[selectedSlideIndex];
 
   const [loading, setLoading] = useState(false);
-  const [err, setError] = useState('');
   const [thxShow, setThx] = useState(LS.getItem(LSKeys.ShowThx, false));
 
   const submit = () => {
-    if (!email) {
-      setError('Укажите куда прислать документы');
-      return;
-    }
     setLoading(true);
 
     // LS.setItem(LSKeys.ShowThx, true);
@@ -124,7 +117,12 @@ export const App = () => {
             />
 
             <div>
-              <Swiper spaceBetween={8} slidesPerView={1} onSlideChange={v => setSelectedSlideIndex(v.activeIndex)}>
+              <Swiper
+                initialSlide={selectedSlideIndex}
+                spaceBetween={8}
+                slidesPerView={1}
+                onSlideChange={v => setSelectedSlideIndex(v.activeIndex)}
+              >
                 {slides.map(s => (
                   <SwiperSlide className={appSt.slide} key={s.perYear}>
                     <div>
@@ -344,14 +342,6 @@ export const App = () => {
                 Правила страхования
               </Typography.Text>
             </div>
-            <InputMobile
-              labelView="outer"
-              label="Куда прислать документы"
-              type="email"
-              block
-              value={email}
-              onChange={(_, { value }) => setEmail(value)}
-            />
 
             <Typography.Text color="secondary" view="secondary-small">
               Нажимая на кнопку «Оплатить», вы подтверждаете ознакомление и соглашаетесь с условиями Полиса-оферты и
@@ -363,7 +353,7 @@ export const App = () => {
       default:
         return null;
     }
-  }, [step, anotherPersonCheck, selectedBtn, selectedSlideItem, email]);
+  }, [step, anotherPersonCheck, selectedBtn, selectedSlideItem]);
 
   if (thxShow) {
     return <ThxLayout />;
@@ -408,7 +398,7 @@ export const App = () => {
             </div>
           </ButtonMobile>
         ) : (
-          <ButtonMobile block view="primary" loading={loading} hint={err} onClick={submit}>
+          <ButtonMobile block view="primary" loading={loading} onClick={submit}>
             Оплатить
           </ButtonMobile>
         )}
