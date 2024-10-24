@@ -6,7 +6,6 @@ import { Switch } from '@alfalab/core-components/switch';
 import { Typography } from '@alfalab/core-components/typography';
 import { useMemo, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import card from './assets/card.png';
 import { LS, LSKeys } from './ls';
 import { appSt } from './style.css';
 import { ThxLayout } from './thx/ThxLayout';
@@ -307,18 +306,6 @@ export const App = () => {
               <Typography.Text view="primary-medium" tag="p" defaultMargins={false}>
                 {selectedBtn === 'm' ? `Один месяц  (${dateM} – ${dateNM})` : `Один год (${dateY} – ${dateNY})`}
               </Typography.Text>
-            </div>
-            <div>
-              <Typography.Text view="component-primary" color="secondary">
-                Счёт списания
-              </Typography.Text>
-
-              <div className={appSt.boxCard}>
-                <img src={card} width={48} height={30} />
-                <Typography.Text view="primary-medium" tag="p" defaultMargins={false}>
-                  Текущий счёт
-                </Typography.Text>
-              </div>
             </div>
 
             <Typography.TitleResponsive style={{ marginTop: '1rem' }} tag="h2" view="small" font="system" weight="semibold">
